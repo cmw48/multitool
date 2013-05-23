@@ -21,7 +21,7 @@ CONSTRUCT {
 WHERE {
 
 # querying VIVO service
-SERVICE <http://bailey.mannlib.cornell.edu:2520/sparql>
+SERVICE <VIVOSERV>
   {  
      #?vivoperson rdf:type foaf:Person .
      #must have a position to play
