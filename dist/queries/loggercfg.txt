@@ -1,0 +1,28 @@
+# Set root logger level and its only appender to A1.
+# choose from TRACE,DEBUG,INFO,WARN,ERROR,FATAL
+#log4j.rootLogger=TRACE, A1, R
+log4j.rootLogger=TRACE, A1, DailyRoller
+
+# A1 is set to be a ConsoleAppender.
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+
+# A1 uses PatternLayout.
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+
+# A1 Prints the date in ISO 8601 format
+log4j.appender.A1.layout.ConversionPattern=%d %-5p %C{1}-%m%n
+
+#log4j.appender.R=org.apache.log4j.RollingFileAppender
+#log4j.appender.R.File=C:\\Users\\cmw48\\workspace\\vivocornell\\ingest\\HRIS\\hringestUPDATE01.log
+# R uses PatternLayout.
+#log4j.appender.R.layout=org.apache.log4j.PatternLayout
+# R Prints the date in ISO 8601 format
+#log4j.appender.R.layout.ConversionPattern=%d %5p [%t] (%F:%L) - %m%n
+
+log4j.appender.DailyRoller=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.DailyRoller.datePattern='.'yy-MM-dd
+log4j.appender.DailyRoller.file=C:\\Users\\cmw48\\workspace\\vivocornell\\ingest\\HRIS\\hringest.log
+log4j.appender.DailyRoller.layout=org.apache.log4j.PatternLayout
+#log4j.appender.DailyRoller.layout.ConversionPattern=%d{ISO8601} %-5p [%t] %c: %m%n
+#log4j.appender.DailyRoller.layout.ConversionPattern=%d{ISO8601} %5p [%t] (%F:%L) - %m%n
+log4j.appender.DailyRoller.layout.ConversionPattern=%d{ISO8601} %C{1} %5p- %m%n

@@ -1,0 +1,47 @@
+#
+# qStrHRISGetPositionRDF.txt
+# updated 120907
+# queries HRIS for all details related to a position
+# TODO:  fix this to pull only KB2 rdf and adjust output
+# TODO: fix core references
+# changed 121003 to add end date where available
+# removed optionals 121115 and noted that enddate was 
+# construct, commented for now
+# made primaryUnitCode optional 130303
+
+PREFIX hr: <http://vivo.cornell.edu/ns/hr/0.9/hr.owl#>  
+PREFIX newhr:   <http://vivoweb.org/ontology/newhr#> 
+PREFIX cuvivo: <http://vivo.cornell.edu/individual/> 
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX core: <http://vivoweb.org/ontology/core#> 
+PREFIX titlemap: <http://vivo.library.cornell.edu/ns/hr/titleMapping#> 
+
+CONSTRUCT {
+      VARVALUE rdfs:label ?hrposnlabel . 
+      VARVALUE hr:LDAPJobNumber ?hrPosnJobNo .
+      VARVALUE  core:hrJobTitle ?hrposnJobTitle .
+      VARVALUE  core:positionForPerson ?hrposnPersonLink .
+      VARVALUE  newhr:company ?hrPosnCompany .
+      VARVALUE  newhr:headInd ?hrPosnHeadInd .
+      VARVALUE  rdf:type core:Position .
+      VARVALUE  hr:primaryUnitCode ?primaryUnitCode .
+}
+WHERE
+{
+  # querying HRIS endpoint
+  SERVICE <HRISSERV>
+
+    {
+      VARVALUE  rdfs:label ?hrposnlabel . 
+      VARVALUE  hr:LDAPJobNumber ?hrPosnJobNo . 
+      VARVALUE  core:hrJobTitle ?hrposnJobTitle . 
+      VARVALUE  core:positionForPerson ?hrposnPersonLink . 
+      VARVALUE  newhr:company ?hrPosnCompany . 
+      VARVALUE  newhr:headInd ?hrPosnHeadInd . 
+      OPTIONAL { VARVALUE  hr:primaryUnitCode ?primaryUnitCode . }
+      #OPTIONAL { VARVALUE  core:dateTimeInterval ?dti . }
+      #OPTIONAL { ?dti core:end ?end . }
+     } 
+}

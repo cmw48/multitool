@@ -1,0 +1,24 @@
+#
+
+# qStrGetPosnOrgForOneHrisPerson
+# updated 120907
+# This query takes a position URI varvalue and returns 
+# position and org pairs
+# updated 121005 to include org/posn reciprocals
+
+PREFIX vivo: <http://vivoweb.org/ontology/core#> 
+
+CONSTRUCT 
+  {
+  ?position vivo:positionInOrganization ?org .
+  ?org vivo:organizationForPosition ?position .
+  }
+WHERE
+{
+  # querying HRIS endpoint
+  SERVICE <HRISSERV>
+    {
+    VARVALUE vivo:personInPosition ?position .
+    ?position vivo:positionInOrganization ?org .
+    }
+}

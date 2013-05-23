@@ -1,0 +1,25 @@
+#
+# qStrHRISTermPositions
+# updated 120907
+# This query returns all HRIS positions for a person
+
+
+PREFIX vivo: <http://vivoweb.org/ontology/core#> 
+PREFIX map: <file:/usr/local/d2r-server-0.7/mappingtest.n3#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX newhr: <http://vivoweb.org/ontology/newhr#> 
+
+
+CONSTRUCT {
+	?termPosition map:netId ?netId .
+}
+WHERE
+{
+  # querying HRIS endpoint
+  SERVICE <HRISSERV>
+
+    {
+      ?termPosition rdf:type newhr:EmploymentTerm .
+	  ?termPosition map:netId ?netId .
+     } 
+}

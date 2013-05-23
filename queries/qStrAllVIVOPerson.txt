@@ -1,0 +1,39 @@
+#
+# qStrAllVIVOPerson
+# updated 120907
+# returns all VIVO person URI
+# where person has an core:hrJobTitle
+# and a netID OR emplID
+# modified 120917 - persons don't have hrJobTitle.  draws 22K+ names.
+
+PREFIX hr: <http://vivo.cornell.edu/ns/hr/0.9/hr.owl#>
+PREFIX cuvivo: <http://vivo.cornell.edu/individual/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX core: <http://vivoweb.org/ontology/core#>
+PREFIX titlemap: <http://vivo.library.cornell.edu/ns/hr/titleMapping#>
+
+
+CONSTRUCT { 
+  ?vivoperson rdf:type foaf:Person .
+    } 
+WHERE {
+
+# querying VIVO service
+SERVICE <http://bailey.mannlib.cornell.edu:2520/sparql>
+  {  
+     #?vivoperson rdf:type foaf:Person .
+     #must have a position to play
+     ?vivoperson core:personInPosition ?position .  
+     # must also have an emplId
+     ?vivoperson hr:emplId ?emplId .
+     # does the position have an end date?
+     OPTIONAL { 
+       ?position core:dateTimeInterval ?dti .
+       ?dti core:end ?end .
+       }
+    #if the position doesn't have an end date, it's active.  
+    FILTER ( (!BOUND (?end))  )
+  }
+}

@@ -1,0 +1,38 @@
+#
+# qStrOrgLinkQueryVIVO
+# updated 120907
+# with all positions in ThisVIVO, 
+# find all orgURI and deptID
+# and bounce them off of VIVO endpoint
+# returning VIVO URIs for position links
+# only where deptID exists in an existing VIVO org
+# (ensures we use VIVO org URIs when we have them)
+
+PREFIX hr: <http://vivo.cornell.edu/ns/hr/0.9/hr.owl#>  
+PREFIX cuvivo: <http://vivo.cornell.edu/individual/> 
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX vivo: <http://vivoweb.org/ontology/core#> 
+PREFIX newhr: <http://vivoweb.org/ontology/newhr#>
+PREFIX vivoc: <http://vivo.library.cornell.edu/ns/0.1#>
+
+
+CONSTRUCT { 
+    ?vivoorg vivo:organizationForPosition ?position .
+    ?position vivo:positionInOrganization ?vivoorg .
+  }   
+WHERE {
+   ?position rdf:type vivo:Position .
+  # querying HRIS endpoint
+  SERVICE <HRISSERV>
+    {
+      ?position vivo:positionInOrganization ?orgURI .
+	  ?orgURI newhr:DeptID ?deptId    
+     } 
+  # querying VIVO endpoint
+  SERVICE <VIVOSERV>
+    {
+       ?vivoorg vivoc:departmentHRcode ?deptId .   
+    }  
+}

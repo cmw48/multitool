@@ -1,0 +1,7 @@
+right click package
+build path
+Configure build path
+click Add External Jar
+navigate to C:\Users\cmw48\workspace01\vivoTools\lib
+select all
+click open

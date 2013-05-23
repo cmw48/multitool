@@ -1,0 +1,48 @@
+#
+# qStrOrgLinkQueryHRIS
+# updated 120907
+# designed to create new orgs from HRIS
+# that are note already in VIVO
+# with all ThisVIVO positions,
+# query HRIS endpoint for orgURI, deptID, UnitID
+# bounce orgURI against VIVO endpoint
+# and only return HRIS organization data
+# where the deptID *does not* exist in a VIVO org
+ 
+PREFIX hr: <http://vivo.cornell.edu/ns/hr/0.9/hr.owl#>  
+PREFIX cuvivo: <http://vivo.cornell.edu/individual/> 
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX vivo: <http://vivoweb.org/ontology/core#> 
+PREFIX newhr: <http://vivoweb.org/ontology/newhr#>
+PREFIX vivoc: <http://vivo.library.cornell.edu/ns/0.1#>
+
+
+CONSTRUCT { 
+    ?orgURI rdf:type foaf:Organization .
+    ?orgURI vivo:organizationForPosition ?position .
+    ?position vivo:positionInOrganization ?orgURI .
+    ?orgURI rdfs:label ?label .
+    ?orgURI newhr:DeptID ?deptId .
+    ?orgURI newhr:UnitID_Ldesc ?UnitID_Ldesc .
+  }   
+WHERE {
+   ?position rdf:type vivo:Position .
+   
+   # querying HRIS endpoint
+   SERVICE <HRISSERV>
+    {
+      ?position vivo:positionInOrganization ?orgURI .
+      OPTIONAL { ?orgURI rdfs:label ?label . }
+      ?orgURI newhr:DeptID ?deptId . 
+      OPTIONAL { ?orgURI newhr:UnitID_Ldesc ?UnitID_Ldesc . }
+    }
+    # querying VIVO endpoint
+    SERVICE <VIVOSERV>
+      {
+        OPTIONAL {?vivoorg vivoc:departmentHRcode ?deptId . }
+      }  
+
+    FILTER (!BOUND(?vivoorg)) 
+}

@@ -1,0 +1,30 @@
+# qStrVIVOPositionDesc02
+# updated 120907
+# why this variant?  Does this work?
+# this query takes person Uri and returns all rdf for Vivo Position
+# note: experiment with breaking up query into two separate faster queries
+# TODO: return all KB2 RDF and adjust rdf:type
+# cleanup?
+
+PREFIX hr: <http://vivo.cornell.edu/ns/hr/0.9/hr.owl#>  
+PREFIX cuvivo: <http://vivo.cornell.edu/individual/> 
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX vivo: <http://vivoweb.org/ontology/core#> 
+PREFIX titlemap: <http://vivo.library.cornell.edu/ns/hr/titleMapping#> 
+
+CONSTRUCT {
+    VARVALUE  <http://vivoweb.org/ontology/core#personInPosition> ?position .
+      ?position ?p ?o .
+}
+WHERE
+{
+  # querying VIVO endpoint
+  SERVICE <VIVOSERV>
+    {
+
+      VARVALUE  <http://vivoweb.org/ontology/core#personInPosition> ?position .
+      ?position ?p ?o .  
+    } 
+}

@@ -1,0 +1,50 @@
+# qStrVivoGetPositionRDF
+# updated 120907
+# this query takes position uri and returns all rdf for Vivo Position
+# TODO: return only KB2 RDF and adjust rdf:type
+# modified 120918 to add rdf:type for Org to balance diff
+
+PREFIX hr: <http://vivo.cornell.edu/ns/hr/0.9/hr.owl#>  
+PREFIX cuvivo: <http://vivo.cornell.edu/individual/> 
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX core: <http://vivoweb.org/ontology/core#> 
+PREFIX titlemap: <http://vivo.library.cornell.edu/ns/hr/titleMapping#> 
+PREFIX newhr: <http://vivoweb.org/ontology/newhr#> 
+PREFIX vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#>
+
+CONSTRUCT {
+     
+      <http://vivo.cornell.edu/individual/empl3226016-position0> rdfs:label ?hrposnlabel . 
+      <http://vivo.cornell.edu/individual/empl3226016-position0> hr:LDAPJobNumber ?hrPosnJobNo . 
+      <http://vivo.cornell.edu/individual/empl3226016-position0> core:hrJobTitle ?hrposnJobTitle . 
+      <http://vivo.cornell.edu/individual/empl3226016-position0> core:positionForPerson ?hrposnPersonLink . 
+      <http://vivo.cornell.edu/individual/empl3226016-position0> core:positionInOrganization ?hrPosnOrgLink . 
+      <http://vivo.cornell.edu/individual/empl3226016-position0> newhr:company ?hrPosnCompany .
+      <http://vivo.cornell.edu/individual/empl3226016-position0> newhr:headInd ?hrPosnHeadInd . 
+      <http://vivo.cornell.edu/individual/empl3226016-position0> rdf:type ?rdftype .
+      ?hrPosnOrgLink core:organizationForPosition <http://vivo.cornell.edu/individual/empl3226016-position0>  . 
+      ?hrPosnOrgLink rdf:type foaf:Organization . 
+
+?hrposnPersonLink hr:primaryWorkingTitle ?primaryWorkingTitle .
+?hrposnPersonLink rdf:type ?personType .
+}
+WHERE
+{
+  # querying VIVO endpoint
+  SERVICE <http://bailey.mannlib.cornell.edu:2520/sparql>
+    {
+      <http://vivo.cornell.edu/individual/empl3226016-position0>  rdf:type ?rdftype .
+      OPTIONAL {<http://vivo.cornell.edu/individual/empl3226016-position0> rdfs:label ?hrposnlabel . }
+      OPTIONAL {<http://vivo.cornell.edu/individual/empl3226016-position0> hr:LDAPJobNumber ?hrPosnJobNo . }
+      OPTIONAL {<http://vivo.cornell.edu/individual/empl3226016-position0> core:hrJobTitle ?hrposnJobTitle . }
+      OPTIONAL {<http://vivo.cornell.edu/individual/empl3226016-position0> core:positionForPerson ?hrposnPersonLink . }
+      OPTIONAL {<http://vivo.cornell.edu/individual/empl3226016-position0> core:positionInOrganization ?hrPosnOrgLink . }
+      OPTIONAL {<http://vivo.cornell.edu/individual/empl3226016-position0> newhr:company ?hrPosnCompany . }
+      OPTIONAL {<http://vivo.cornell.edu/individual/empl3226016-position0> newhr:headInd ?hrPosnHeadInd . }
+# modified 120918 to dredge up related person triples 
+      ?hrposnPersonLink hr:primaryWorkingTitle ?primaryWorkingTitle .
+      ?hrposnPersonLink vitro:mostSpecificType ?personType .
+    }
+}

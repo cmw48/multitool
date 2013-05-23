@@ -1,0 +1,35 @@
+#
+# qStrAllVIVOPerson
+# updated 120907
+# queries VIVO for all persons that:
+# - have a position
+# - have a netID OR emplID
+# - do not have a position that is marked as newhr:TerminatedPosition
+# updated 120913: now looks for Term End Date instead.
+
+PREFIX hr: <http://vivo.cornell.edu/ns/hr/0.9/hr.owl#>
+PREFIX cuvivo: <http://vivo.cornell.edu/individual/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX core: <http://vivoweb.org/ontology/core#>
+PREFIX titlemap: <http://vivo.library.cornell.edu/ns/hr/titleMapping#>
+
+CONSTRUCT { 
+  ?vivoperson rdf:type foaf:Person .
+    } 
+WHERE {
+       # querying VIVO endpoint
+       SERVICE <VIVOSERV>
+       {  
+          ?vivoperson core:personInPosition ?position .
+          ?position rdf:type ?type .
+          OPTIONAL {
+               { ?vivoperson hr:netId ?netId } UNION { ?vivoperson hr:emplId ?emplId }
+                   }
+       }
+
+#FILTER (((BOUND(?netId)) && (?type != <http://vivoweb.org/ontology/newhr#TerminatedPosition> )) || ((BOUND(?emplId)) &&  (?type != <http://vivoweb.org/ontology/newhr#TerminatedPosition> )))
+FILTER ((BOUND(?netId)) && (!BOUND(?end)) || (BOUND(?emplId)) && (!BOUND(?end)))
+
+}
