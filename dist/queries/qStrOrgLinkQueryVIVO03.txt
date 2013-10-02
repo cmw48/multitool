@@ -19,12 +19,12 @@ CONSTRUCT {
 WHERE {
    ?person vivo:personInPosition ?position .
    
-  SERVICE <http://bailey.mannlib.cornell.edu:2020/sparql>
+  SERVICE <HRISSERV>
     {
       ?position vivo:positionInOrganization ?orgURI .
       ?orgURI newhr:DeptID ?deptId .
     } 
-  SERVICE <http://bailey.mannlib.cornell.edu:2520/sparql>
+  SERVICE <VIVOSERV>
     {
        ?vivoorg vivoc:departmentHRcode ?deptId .   
     }  

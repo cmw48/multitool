@@ -2,7 +2,7 @@
 # qStrNewPersonHRISRDF
 # with hr URI in hand, collect all D2R RDF about a new person.
 # edited 8/3/12 to remove addr and phone lookup.
-# updated 120907
+# updated130904 to fix hardcoded hr service 
 
 PREFIX hr: <http://vivo.cornell.edu/ns/hr/0.9/hr.owl#>  
 PREFIX cuvivo: <http://vivo.cornell.edu/individual/> 
@@ -28,7 +28,7 @@ CONSTRUCT {
   }   
 WHERE {
   # querying HRIS endpoint
-  SERVICE <http://bailey.mannlib.cornell.edu:2020/sparql>
+  SERVICE <HRISSERV>
     {
     #VARVALUE rdf:type foaf:Person .
     VARVALUE hr:emplId ?hrisemplId .

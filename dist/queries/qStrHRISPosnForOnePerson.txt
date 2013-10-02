@@ -12,7 +12,7 @@ CONSTRUCT {
 WHERE
 {
   # querying HRIS endpoint
-  SERVICE <http://bailey.mannlib.cornell.edu:2020/sparql>
+  SERVICE <HRISSERV>
     { 
       VARVALUE vivo:personInPosition ?position .
       OPTIONAL {?position vivo:dateTimeInterval ?dti. }

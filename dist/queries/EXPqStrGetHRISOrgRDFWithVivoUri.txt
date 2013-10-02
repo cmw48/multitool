@@ -23,13 +23,13 @@ CONSTRUCT {
   }   
 WHERE {
    
-   SERVICE <http://bailey.mannlib.cornell.edu:2020/sparql>
+   SERVICE <HRISSERV>
     {
       #VARVALUE rdfs:label ?label .
       VARVALUE newhr:DeptID ?deptId . 
       #VARVALUE newhr:UnitID_Ldesc ?UnitID_Ldesc . 
     }
-    SERVICE <http://bailey.mannlib.cornell.edu:2520/sparql>
+    SERVICE <VIVOSERV>
       {
         {?vivoorg vivoc:departmentHRcode ?deptId . 
           } UNION { 

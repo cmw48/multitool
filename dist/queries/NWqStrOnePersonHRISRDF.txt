@@ -22,7 +22,7 @@ CONSTRUCT {
   #?hrisperson foaf:lastName ?hrislastName .
   }   
 WHERE {
-  SERVICE <http://bailey.mannlib.cornell.edu:2020/sparql>
+  SERVICE <HRISSERV>
   # querying HRIS D2R on 2020
     {
     ?hrisperson hr:emplId "VARVALUE" .

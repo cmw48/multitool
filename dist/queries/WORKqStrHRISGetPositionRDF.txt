@@ -34,7 +34,7 @@ CONSTRUCT {
 }
 WHERE
 {
-  SERVICE <http://bailey.mannlib.cornell.edu:2020/sparql>
+  SERVICE <HRISSERV>
   # querying HRIS D2R on 2020
     {
       OPTIONAL { <http://vivo.cornell.edu/individual/empl2025949-position0>  rdfs:label ?hrposnlabel . }

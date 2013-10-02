@@ -85,7 +85,7 @@ public Model IterateThroughVivoPersonList(Model mdlAllVIVOPerson) throws Excepti
 				// write rdf to all 
 				rw.WriteRdf(allRetractionsFileName, cdm.getRetractions(), "N-TRIPLE");
 				rw.WriteRdf(allAdditionsFileName, cdm.getAdditions(), "N-TRIPLE");
-				logger.info("adding:" + cdm.getAdditions());
+				//logger.info("adding:" + cdm.getAdditions());
 				
 				
 			} //end while for person iter

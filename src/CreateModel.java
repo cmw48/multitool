@@ -94,7 +94,7 @@ public class CreateModel {
 				    } 
 
 			    } catch (Exception e) { 
-				     logger.error("problem writing the new model!  Error" + e, e);
+				     logger.error("problem (not really writing) the new model!  Error" + e, e);
 	    		}  finally {
 		    		//close query execution
 		    		qexecNewQuery.close();

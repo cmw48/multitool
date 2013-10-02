@@ -33,7 +33,7 @@ CONSTRUCT {
 WHERE
 {
   # querying VIVO endpoint
-  SERVICE <http://bailey.mannlib.cornell.edu:2520/sparql>
+  SERVICE <VIVOSERV>
     {
       <http://vivo.cornell.edu/individual/empl3226016-position0>  rdf:type ?rdftype .
       OPTIONAL {<http://vivo.cornell.edu/individual/empl3226016-position0> rdfs:label ?hrposnlabel . }
