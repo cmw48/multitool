@@ -16,7 +16,7 @@ VARVALUE vivo:personInPosition ?position .
 WHERE
 {
     # querying VIVO endpoint
-  SERVICE <http://bailey.mannlib.cornell.edu:2520/sparql>
+  SERVICE <VIVOSERV>
     {
       GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2> {
       VARVALUE vivo:personInPosition ?position .
