@@ -1,4 +1,3 @@
-
 # qStrHRISPosnForOnePerson
 # modified 121130 - uses DTI as qualifier for filter
 # This query returns all HRIS positions for a person
@@ -12,7 +11,7 @@ CONSTRUCT {
 WHERE
 {
   # querying HRIS endpoint
-  SERVICE <http://bailey.mannlib.cornell.edu:2020/sparql>
+  SERVICE <HRISSERV>
     { 
       VARVALUE vivo:personInPosition ?position .
       OPTIONAL {?position vivo:dateTimeInterval ?dti. }
