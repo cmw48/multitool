@@ -4,7 +4,7 @@
 # using presence of DTI as filter (should use vivo:end, but it doesn't work)
 # with person URI, 
 # return all VIVO positions for a person
-
+# TODO: removed graph specific check
 
 PREFIX vivo: <http://vivoweb.org/ontology/core#> 
 
@@ -18,11 +18,11 @@ WHERE
     # querying VIVO endpoint
   SERVICE <VIVOSERV>
     {
-      GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2> {
+      #GRAPH <http://vitro.mannlib.cornell.edu/default/vitro-kb-2> {
       VARVALUE vivo:personInPosition ?position .
       OPTIONAL {?position vivo:dateTimeInterval ?dti. }
       #OPTIONAL {?dti vivo:end ?endDate . }
       FILTER (!BOUND(?dti)) 
-       }
+      # }
     } 
 }
