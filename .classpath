@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="src/|lib/|build/" kind="src" path=""/>
+	<classpathentry kind="src" path="lib"/>
+	<classpathentry kind="src" path="build"/>
 	<classpathentry kind="lib" path="dist/hr.jar"/>
 	<classpathentry kind="lib" path="dist/lib/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="dist/lib/aduna-appbase-core-3.4.jar"/>
