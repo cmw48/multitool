@@ -14,7 +14,8 @@ target/
 *.db
 
 # log files #
-*.log
+hringest.log
+hringest.log.*
  
 ######################
 # Windows
